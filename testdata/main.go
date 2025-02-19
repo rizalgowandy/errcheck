@@ -2,12 +2,11 @@ package main
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/rand"
 	mrand "math/rand"
+	"os"
 )
 
 func a() error {
@@ -147,12 +146,11 @@ func main() {
 	b2.Write(nil)
 	rand.Read(nil)
 	mrand.Read(nil)
-	sha256.New().Write([]byte{})
 	pr, pw := io.Pipe()
 	pr.CloseWithError(nil)
 	pw.CloseWithError(nil)
 
-	ioutil.ReadFile("main.go") // UNCHECKED
+	os.ReadFile("main.go") // UNCHECKED
 
 	var emiw ErrorMakerInterfaceWrapper
 	emiw.MakeNilError()

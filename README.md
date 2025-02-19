@@ -8,9 +8,7 @@ errcheck is a program for checking for unchecked errors in Go code.
 
     go install github.com/kisielk/errcheck@latest
 
-errcheck requires Go 1.12 or newer, and depends on the package go/packages from the golang.org/x/tools repository.
-
-errcheck requires module support to be enabled, which is the default in Go 1.13 and later. If installing with Go 1.12 you will need to specify `GO111MODULE=on` if building within `$GOPATH`.
+errcheck requires Go 1.22 or newer.
 
 ## Use
 
@@ -66,9 +64,9 @@ the the function call is excluded only if the type of the first argument is `TYP
 
 An example of an exclude file is:
 
-    io/ioutil.ReadFile
     io.Copy(*bytes.Buffer)
     io.Copy(os.Stdout)
+    os.ReadFile
 
     // Sometimes we don't care if a HTTP request fails.
     (*net/http.Client).Do

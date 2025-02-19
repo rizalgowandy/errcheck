@@ -6,9 +6,9 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	mrand "math/rand"
+	"os"
 )
 
 func a() error {
@@ -105,6 +105,19 @@ func main() {
 	_ = x.a() // ok, assigned to blank
 	x.a()     // want "unchecked error"
 
+	// Methods on alias types and pointers to alias types
+	x2 := embedtalias{}
+	_ = x2.a() // ok, assigned to blank
+	x2.a()     // want "unchecked error"
+
+	x3 := &embedtalias{}
+	_ = x3.a() // ok, assigned to blank
+	x3.a()     // want "unchecked error"
+	
+	var x4 embedtptralias
+	_ = x4.a() // ok, assigned to blank
+	x4.a()     // want "unchecked error"
+
 	// Method call on a struct member
 	y := u{x}
 	_ = y.t.a() // ok, assigned to blank
@@ -150,7 +163,7 @@ func main() {
 	mrand.Read(nil)
 	sha256.New().Write([]byte{})
 
-	ioutil.ReadFile("main.go") // want "unchecked error"
+	os.ReadFile("main.go") // want "unchecked error"
 
 	var emiw ErrorMakerInterfaceWrapper
 	emiw.MakeNilError() // want "unchecked error"
